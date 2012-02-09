@@ -37,7 +37,7 @@ class OpenGraph {
 			\Error::notice('OpenGraph with this name exists already, cannot be overwritten.');
 			return static::$_instances[$name];
 		}
-		static::$_instances[$name] = new PropertyHolder();
+		static::$_instances[$name] = new PropertyHolder($name);
 
 		if ($name == 'default')
 			static::$_instance = static::$_instances[$name];
@@ -109,7 +109,7 @@ class OpenGraph {
 	 * @return PropertyHolder this
 	 */
 	public static function url($url) {
-		return static::instance()->add('url', $url);
+		return static::instance()->url($url);
 	}
 
 	/**
@@ -118,7 +118,7 @@ class OpenGraph {
 	 * @return PropertyHolder this
 	 */
 	public static function image($image) {
-		return static::instance()->add('image', $image);
+		return static::instance()->image($image);
 	}
 
 

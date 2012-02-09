@@ -68,6 +68,11 @@ class PropertyHolder {
 	}
 
 	/**
+	 * @var string Name of this PropertyHolder
+	 */
+	private $name;
+
+	/**
 	 * @var array Our properties with the form name => value
 	 */
 	private $properties = array();
@@ -86,10 +91,14 @@ class PropertyHolder {
 
 	/**
 	 * Create a new PropertyHolder.
-	 * The url OpenGraph property is set to Uri::main()
+	 * The url OpenGraph property is set to Uri::main() if
+	 * there's a current URI.
 	 */
-	public function __construct() {
-		$this->url(\Fuel\Core\Uri::main());
+	public function __construct($name) {
+		if(is_object(\Fuel\Core\Request::main())
+				&& ! is_null(\Fuel\Core\Request::main()->uri))
+			$this->url(\Fuel\Core\Uri::main());
+		$this->name = $name;
 	}
 
 	/**
@@ -138,7 +147,7 @@ class PropertyHolder {
 	 * @return PropertyHolder this
 	 */
 	public function type($type) {
-		return $this->add('type', $title);
+		return $this->add('type', $type);
 	}
 
 	/**
